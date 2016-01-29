@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+
+var app = require('../app');
+var http = require('http');
+var cfenv = require( 'cfenv' );
+var appEnv = cfenv.getAppEnv();
+
+// ローカルでの動作確認用
+if (appEnv.isLocal == true){
+    app.set('port', 8080);
+} else {
+    app.set('port', appEnv.port);
+}
+
+http.createServer(app).listen(app.get('port'), function(){
+    console.log('Express server listening on port ' + app.get('port'));
+});
